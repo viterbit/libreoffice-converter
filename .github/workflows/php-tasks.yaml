@@ -1,0 +1,65 @@
+name: PHP Tasks
+
+on:
+    push:
+
+jobs:
+    analyze:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.4
+
+            - name: Install dependencies
+              run: composer install --prefer-dist --no-progress --no-suggest
+
+            - name: Detecting PHP Code Standards Fixer
+              run: composer run-script phpcsfixer
+
+            - name: Detecting PHP Code Standards Violations
+              run: composer run-script phpcbf
+
+            - name: PHP Static Analyzer
+              run: composer run-script phpstan
+
+    dump-check:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.4
+
+            - name: Install dependencies
+              run: composer install --prefer-dist --no-progress --no-suggest
+
+            - name: Detecting forgotten dump
+              run: composer run-script dumpcheck
+
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.4
+
+            - name: Install dependencies
+              run: composer install --prefer-dist --no-progress --no-suggest
+
+            - name: Run PHPUnit tests
+              run: composer run-script test

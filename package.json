@@ -1,0 +1,46 @@
+{
+  "name": "LibOfficeConverter",
+  "version": "1.0.0",
+  "description": "Viterbit LibOfficeConverter",
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^11.0.0",
+    "commitizen": "^4.2.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "standard-version": "^9.0.0"
+  },
+  "scripts": {
+    "release": "HUSKY_SKIP_HOOKS=1 standard-version",
+    "cz": "cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:viterbit/liboffice-converter.git"
+  },
+  "author": "Marcos Gómez <marcos@viterbit.com>",
+  "license": "proprietary",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged && ./vendor/bin/phpunit --configuration phpunit.xml",
+      "prepare-commit-msg": "exec < /dev/tty && cz --hook || true"
+    }
+  },
+  "homepage": "https://github.com/viterbit/liboffice-converter",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.php": [
+      "./vendor/bin/php-cs-fixer fix --config=.php_cs.dist --verbose",
+      "./vendor/bin/phpcbf --standard=phpcs.xml.dist",
+      "composer run phpstan",
+      "./vendor/bin/var-dump-check --symfony"
+    ]
+  }
+}
