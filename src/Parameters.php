@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Viterbit LibOfficeConverter package.
+ * This file is part of the Viterbit Libreoffice converter package.
  *
  * (c) Viterbit <contact@viterbit.com>
  *
@@ -18,14 +18,14 @@ class Parameters
      *
      * @var string|null
      */
-    protected $outputFile = null;
+    protected $outputFile;
 
     /**
      * Output format.
      *
      * @var string|null
      */
-    protected $outputFormat = null;
+    protected $outputFormat;
 
     /**
      * Document type.
@@ -42,21 +42,21 @@ class Parameters
      *
      * @var string|null
      */
-    protected $documentType = null;
+    protected $documentType;
 
     /**
      * Full path to input file. In case when input is stdin - null.
      *
      * @var string|null
      */
-    protected $inputFile = null;
+    protected $inputFile;
 
     /**
      * Input data, eg. HTML as string.
      *
      * @var mixed
      */
-    protected $inputData = null;
+    protected $inputData;
 
     /**
      * Output filters, eg.
@@ -68,9 +68,12 @@ class Parameters
     protected $outputFilters = [];
 
     public function __construct(
-        /*string*/ $outputFormat = null,
-        /*string*/ $outputFile = null,
-        /*string*/ $inputFile = null
+        /*string*/
+        $outputFormat = null,
+        /*string*/
+        $outputFile = null,
+        /*string*/
+        $inputFile = null
     ) {
         $this->setOutputFormat($outputFormat);
         $this->setOutputFile($outputFile);
@@ -196,11 +199,9 @@ class Parameters
     }
 
     /**
-     * @param mixed $inputData
-     *
      * @return Parameters
      */
-    public function setInputData($inputData)
+    public function setInputData(mixed $inputData)
     {
         $this->inputData = $inputData;
 

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Viterbit LibOfficeConverter package.
+ * This file is part of the Viterbit Libreoffice converter package.
  *
  * (c) Viterbit <contact@viterbit.com>
  *
@@ -16,8 +16,8 @@ class OutputFilters
     /**
      * More filters: https://wiki.openoffice.org/wiki/Framework/Article/Filter/FilterList_OOo_3_0.
      */
-    public const TEXT_ENCODED = 'Text (encoded)';
-    public const UTF8 = 'UTF8';
+    final public const TEXT_ENCODED = 'Text (encoded)';
+    final public const UTF8 = 'UTF8';
 
     /**
      * Default filters for output formats.
@@ -26,16 +26,16 @@ class OutputFilters
      *
      * @return array
      */
-    public static function getDefault(/*string*/ $outputFormat)
-    {
-        switch ($outputFormat) {
-            case Format::TEXT_TEXT:
-                return [
-                    static::TEXT_ENCODED,
-                    static::UTF8,
-                ];
-        }
-
-        return [];
+    public static function getDefault(
+        /*string*/
+        $outputFormat
+    ) {
+        return match ($outputFormat) {
+            Format::TEXT_TEXT => [
+                static::TEXT_ENCODED,
+                static::UTF8,
+            ],
+            default => [],
+        };
     }
 }

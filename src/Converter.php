@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Viterbit LibOfficeConverter package.
+ * This file is part of the Viterbit Libreoffice converter package.
  *
  * (c) Viterbit <contact@viterbit.com>
  *
@@ -20,14 +20,7 @@ class Converter implements ConverterInterface
 {
     use LoggerAwareTrait;
 
-    public const BINARY_DEFAULT = 'libreoffice';
-
-    /**
-     * Path to binary.
-     *
-     * @var string
-     */
-    protected $binaryPath;
+    final public const BINARY_DEFAULT = 'libreoffice';
 
     /**
      * Temporary path (by defaults is equal to sys_get_temp_dir()).
@@ -35,27 +28,6 @@ class Converter implements ConverterInterface
      * @var string
      */
     protected $tempDir;
-
-    /**
-     * Timeout.
-     *
-     * @var int
-     */
-    protected $timeout;
-
-    /**
-     * Prefix for temporary file names.
-     *
-     * @var string
-     */
-    protected $tempPrefix;
-
-    /**
-     * The environment variables or null to use the same environment as the current PHP process.
-     *
-     * @var array|null
-     */
-    protected $env;
 
     /**
      * Defailt options for libreoffice.
@@ -82,27 +54,27 @@ class Converter implements ConverterInterface
      * @param array  $env
      */
     public function __construct(
-        /*string*/ $binaryPath = self::BINARY_DEFAULT,
-        /*string*/ $tempDir = null,
-        /*int*/ $timeout = null,
+        /*string*/
+        protected $binaryPath = self::BINARY_DEFAULT,
+        /*string*/
+        $tempDir = null,
+        /*int*/
+        protected $timeout = null,
         LoggerInterface $logger = null,
-        /*string*/ $tempPrefix = 'vb_liboffice-converter_',
-        /*array*/ $env = null
+        /*string*/
+        protected $tempPrefix = 'vb_liboffice-converter_',
+        /*array*/
+        protected $env = null
     ) {
         if (!$logger) {
             $logger = new NullLogger();
         }
         $this->setLogger($logger);
-        $this->binaryPath = $binaryPath;
 
         $this->tempDir = $tempDir ?: sys_get_temp_dir();
-        if ('/' === substr($this->tempDir, -1, 1)) {
+        if (str_ends_with($this->tempDir, '/')) {
             $this->tempDir = substr($this->tempDir, 0, -1);
         }
-
-        $this->timeout = $timeout;
-        $this->tempPrefix = $tempPrefix;
-        $this->env = $env;
     }
 
     /**
@@ -121,9 +93,7 @@ class Converter implements ConverterInterface
         }
 
         $inputFile = $this->getInputFile($parameters);
-        $outputFilters = implode('', array_map(function ($item) {
-            return ':'.$item;
-        }, $this->getOutputFilters($parameters)));
+        $outputFilters = implode('', array_map(fn ($item) => ':'.$item, $this->getOutputFilters($parameters)));
 
         $options = array_merge($this->defaultOptions, [
             $documentType ? '--'.$documentType : '',

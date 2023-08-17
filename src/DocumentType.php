@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Viterbit LibOfficeConverter package.
+ * This file is part of the Viterbit Libreoffice converter package.
  *
  * (c) Viterbit <contact@viterbit.com>
  *
@@ -13,14 +13,14 @@ namespace Viterbit\LibOfficeConverter;
 
 class DocumentType
 {
-    public const WRITER = 'writer';
-    public const CALC = 'calc';
-    public const DRAW = 'draw';
-    public const IMPRESS = 'impress';
-    public const BASE = 'base';
-    public const MATH = 'math';
-    public const GLOB = 'global';
-    public const WEB = 'web';
+    final public const WRITER = 'writer';
+    final public const CALC = 'calc';
+    final public const DRAW = 'draw';
+    final public const IMPRESS = 'impress';
+    final public const BASE = 'base';
+    final public const MATH = 'math';
+    final public const GLOB = 'global';
+    final public const WEB = 'web';
 
     /**
      * Document types.

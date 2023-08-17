@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Viterbit LibOfficeConverter package.
+ * This file is part of the Viterbit Libreoffice converter package.
  *
  * (c) Viterbit <contact@viterbit.com>
  *
